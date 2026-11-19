@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marketing Dashboard</title>
+<link rel="icon" type="image/png" sizes="32x32" href="img/favicon-c-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="img/favicon-c-16.png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon-c.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Montserrat:wght@600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top"><div class="top-in">
+  <div class="logo"><img src="img/logo-c-light.png" alt=""><span class="wm">convertleads</span><small>Marketing Dashboard</small></div>
+  <nav class="menu" id="menu"></nav>
+  <button class="login" id="login" title="Demo: login is turned off">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m10 17 5-5-5-5"/><path d="M15 12H3"/><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/></svg>
+    <span>Log in</span></button>
+</div></header>
+<main>
+  <section class="filters" id="filters"></section>
+  <div id="page"></div>
+</main>
+<aside class="drawer" id="drawer"></aside>
+<script src="vendor/echarts.min.js"></script>
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
