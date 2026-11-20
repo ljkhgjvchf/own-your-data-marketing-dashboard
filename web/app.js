@@ -662,6 +662,10 @@ PAGES['acq/seo'] = { filters: [], render() {
   const sovW = b => weeks.map((w, i) => { if (i < 3) return null; const a = T.ai.filter(x => weeks.slice(i - 3, i + 1).includes(x.wk)); return div(sum(a.filter(x => x.brand === b), 'm'), sum(a, 'm')); });  // 4-week rolling
   const aiS = rows('sessions', r, x => x.ch === 'ai_search'), aiL = rows('leads', r, x => x.ch === 'ai_search'), aiO = rows('orders', r, x => !x.ren && x.ch === 'ai_search');
   const aiSp = p ? sum(rows('sessions', p, x => x.ch === 'ai_search'), 's') : null, aiRp = p ? sum(rows('orders', p, x => !x.ren && x.ch === 'ai_search'), 'rev') : null;
+  // landing pages that get the most AI referral visits
+  const aiSpR = p ? rows('sessions', p, x => x.ch === 'ai_search') : [];
+  const aiPages = Object.entries(groupBy(aiS, x => x.page)).map(([pg, a]) => { const ss = sum(a, 's'), o = aiO.filter(x => x.page === pg), rev = sum(o, 'rev'), sp_ = p ? sum(aiSpR.filter(x => x.page === pg), 's') : null;
+    return { page: pg, s: ss, d: sp_ ? ss / sp_ - 1 : null, leads: sum(aiL.filter(x => x.page === pg), 'n'), sales: sum(o, 'n'), rev, rpv: div(rev, ss) }; }).sort((a, b) => b.s - a.s);
   // prompts where a competitor is mentioned more than us
   const prompts = Object.entries(groupBy(A4, x => x.prompt)).map(([pr, a]) => {
     const rate = b => div(sum(a.filter(x => x.brand === b), 'm'), a.filter(x => x.brand === b).length);
@@ -734,8 +738,12 @@ PAGES['acq/seo'] = { filters: [], render() {
       'Answer engines pick a few brands per answer. Moving from 3rd to 1st mention is the GEO equivalent of moving to position 1.')}
   </div>
   <div class="grid g2" style="margin-top:14px">
-    ${card('Prompts where a competitor wins', table([{ k: 'prompt', l: 'Prompt', f: v => esc(v) }, { k: 'us', l: 'Us', f: v => pct(v, 0) }, { k: 'comp', l: 'Leader', al: 'l', f: (v, x) => `${esc(v)} ${pct(x.compM, 0)}` },
+    <div style="display:grid;gap:14px;align-content:start">${card('Prompts where a competitor wins', table([{ k: 'prompt', l: 'Prompt', f: v => esc(v) }, { k: 'us', l: 'Us', f: v => pct(v, 0) }, { k: 'comp', l: 'Leader', al: 'l', f: (v, x) => `${esc(v)} ${pct(x.compM, 0)}` },
       { k: 'gap', l: 'Gap', f: v => `<b style="color:${v > 0 ? '#b42424' : '#006300'}">${v > 0 ? '−' : '+'}${Math.abs(v * 100).toFixed(0)} pt</b>` }, { k: 'page', l: 'Page to improve', al: 'l' }], prompts.slice(0, 7)))}
+    ${card('Pages that get the most AI referrals', table([{ k: 'page', l: 'Landing page', al: 'l' }, { k: 's', l: 'AI visits', f: num, bar: aiPages[0]?.s || 1 },
+      { k: 'd', l: 'Δ vs prev', f: v => v == null ? '–' : `<span class="delta ${v >= 0 ? 'up' : 'down'}">${v >= 0 ? '▲' : '▼'} ${pct(Math.abs(v), 0)}</span>` },
+      { k: 'leads', l: 'Leads', f: num }, { k: 'sales', l: 'Sales', f: num }, { k: 'rev', l: 'Revenue', f: v => eur(v) }, { k: 'rpv', l: '€ / visit', f: v => v == null ? '–' : eur(v, 2) }], aiPages),
+      'GA4 sessions from chatgpt.com, perplexity.ai, gemini.google.com, claude.ai… by landing page. The pages answer engines already link to: keep them fresh and add the prompts above to them.')}</div>
     <div class="card"><h3>GEO readiness <span class="tag">audit-seo skill · layer 2</span></h3>
       <div style="display:flex;align-items:baseline;gap:10px;margin-top:8px"><span class="score">${passN}/${geo.length}</span><span class="sub">checks passed (${pct(passN / geo.length, 0)})</span></div>
       ${table([{ k: 'id', l: '#' }, { k: 'check', l: 'Check', al: 'l', f: v => esc(v) }, { k: 'status', l: 'Status', f: v => v === 'pass' ? '<span class="status ok"><span class="ic">✓</span>Pass</span>' : '<span class="status no"><span class="ic">!</span>Fix</span>' },
