@@ -427,7 +427,7 @@ PAGES.brief = { filters: ['channel'], render() {
   return `<div class="page-h"><div><h1>${title}</h1><p>${fmtR(r)}${p ? ` · compared with ${fmtR(p)}` : ' · no comparison'}${S.channel !== 'all' ? ` · channel: ${CH[S.channel === 'unattributed' ? '' : S.channel][0]}` : ''}</p></div>
     <span class="owner">Owner: marketing manager · ${cadence}</span></div>
   <div class="ns">
-    <div class="hero"><span class="ns-icon">${ICON.star}</span><div class="hl">North star · contribution after marketing</div><div class="big">${eur(m.contrib)}</div>
+    <div class="hero"><div class="hl">North star · contribution after marketing</div><div class="big">${eur(m.contrib)}</div>
       <div class="row" style="display:flex;gap:8px">${deltaHtml(m.contrib, pm?.contrib)}</div>
       <div class="hs">Revenue ${eur(m.rev)} − marketing ${eur(m.cost.total)} (ads ${eur(m.cost.ads)} · creators ${eur(m.cost.cr)} · tools ${eur(m.cost.tools)}). Before product costs.</div></div>
     ${card('ROAS per platform: ceiling, estimate, floor', roasChart, 'Platform numbers are the upper bound, orders matched to the platform are the lower bound (Google Modern Measurement Playbook). Decide on the orange estimate.')}
@@ -716,7 +716,7 @@ PAGES['acq/seo'] = { filters: [], render() {
       'The slow brand metric short-term numbers miss (Binet & Field). Share of search tends to lead market share. Source: Google Trends / keyword volumes, monthly.')}
   </div>
 
-  <div class="sec">AI search (GEO) · ${logo('ChatGPT', 16)}${logo('Google AI Overviews', 16)}${logo('Perplexity', 16)}${logo('Gemini', 16)}${logo('Claude', 16)}</div>
+  <div class="sec">AI search (GEO) · ${logo('ChatGPT', 24)}${logo('Google AI Overviews', 24)}${logo('Perplexity', 24)}${logo('Gemini', 24)}${logo('Claude', 24)}</div>
   <div class="grid g6">
     ${kpi({ lbl: 'AI share of voice', cur: v.sov, prev: vp.sov, fmt: v => pct(v, 0), meta: 'Our mentions ÷ all brand mentions, last 4 weeks' })}
     ${kpi({ lbl: 'Mention rate', cur: v.mention, prev: vp.mention, fmt: v => pct(v, 0), meta: `${T.ai.filter(x => x.wk === weeks[weeks.length - 1] && x.brand === US).length} prompt × engine checks a week` })}

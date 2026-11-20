@@ -45,9 +45,9 @@ main{max-width:1440px;margin:0 auto;padding:24px 24px 64px}
 .seg button.on{background:var(--dark1);color:#fff;font-weight:500}
 .clear{height:36px;border:0;background:var(--accent-soft);color:#c2410c;font-weight:500;border-radius:9px;padding:0 14px;cursor:pointer}
 .page-h{display:flex;justify-content:space-between;align-items:flex-end;margin:6px 0 16px;gap:16px;flex-wrap:wrap}
-.page-h h1{font-size:24px;line-height:32px;font-weight:500}
+.page-h h1{font-size:32px;line-height:40px;font-weight:500}
 .page-h p{color:var(--text2);margin-top:4px}
-.sec{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px}
+.sec{font-size:28px;line-height:1.2;font-weight:500;color:var(--text);margin:56px 0 20px;padding-top:32px;border-top:1px solid var(--border)}
 .grid{display:grid;gap:16px}
 .g2{grid-template-columns:repeat(2,minmax(0,1fr))}.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
 .g4{grid-template-columns:repeat(4,minmax(0,1fr))}.g5{grid-template-columns:repeat(5,minmax(0,1fr))}.g6{grid-template-columns:repeat(6,minmax(0,1fr))}
